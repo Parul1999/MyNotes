@@ -1,0 +1,10 @@
+.nav-item {
+  color: var(--white);
+  text-decoration: none;
+  padding-top: 2.5rem;
+  padding-right: 2rem;
+}
+
+.nav-item:hover {
+  color: var(--primary);
+}
