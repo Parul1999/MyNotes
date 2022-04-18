@@ -1,4 +1,4 @@
-export const Server_url = "http://localhost:3000"
+export const Server_url = "https://mynotess.vercel.app/"
 export const API = {
     auth: {
         login: '/api/auth/login',
