@@ -46,7 +46,7 @@ const Dashboard = () => {
   };
 
   const editNote = (id) => {};
-  console.log("ggg",state)
+
   const [tags, setTags] = useState([
     "All",
     "Shopping",
@@ -87,6 +87,7 @@ const Dashboard = () => {
               archive={() => {
                 archiveNote(item);
               }}
+              buttons={true}
             />
           );
         })}

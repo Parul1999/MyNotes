@@ -68,7 +68,8 @@ export const createNoteHandler = function (schema, request) {
  * send DELETE Request at /api/notes/:noteId
  * */
 
-export const deleteNoteHandler = function (schema, request) {  
+export const deleteNoteHandler = function (schema, request) {
+  debugger
   const user = requiresAuth.call(this, request);
   try {
     if (!user) {
