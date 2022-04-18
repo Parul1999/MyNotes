@@ -1,4 +1,3 @@
-
 import {
   createContext,
   useContext,
@@ -17,7 +16,7 @@ const NotesListContext = createContext();
 const NoteListProvider = ({ children }) => {
   const [state, dispatch] = useReducer(noteActions,{
     allNotes: [],
-    deletedNotes:[],
+    trashNotes:[],
     archiveNotes:[],
     sort: null,
   });
@@ -27,13 +26,6 @@ const NoteListProvider = ({ children }) => {
       let url=Server_url+API.notes.note_list
       getApiCall(url , auth)
       .then(json=>dispatch(fetchNoteList(json)))
-      
-
-
-      let url1=Server_url+API.archive_notes.archive_list
-      getApiCall(url1 , auth)
-      .then(json=>dispatch(fetchArchiveNoteList(json)))
-     
   }, []);
   return (
     <NotesListContext.Provider value={{ state, dispatch }}>

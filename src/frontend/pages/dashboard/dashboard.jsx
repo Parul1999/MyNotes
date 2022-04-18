@@ -1,40 +1,96 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { API, Server_url } from "../../adapters/apis";
-import { getApiCall, postApiCall } from "../../adapters/callmethods";
+import {
+  deleteApiCall,
+  getApiCall,
+  postApiCall,
+} from "../../adapters/callmethods";
 import Card from "../../commoncomponents/card/card";
 import Searchbar from "../../commoncomponents/searchbar/searchbar";
+import {
+  addTrashNote,
+  fetchArchiveNoteList,
+  fetchNoteList,
+} from "../../context/actionCreators/noteActions";
 import { useAuth } from "../../context/store/auth";
 import { UsenoteList } from "../../context/store/notelist";
+import CreateNote from "../addnotes/addnotes";
+import uuid from "react-uuid";
 
 const Dashboard = () => {
-  const { state } = UsenoteList();
+  const { state, dispatch } = UsenoteList();
   const { auth } = useAuth();
 
-  useEffect(() => {
+  const deleteNote = (item) => {
+    let url = Server_url + API.notes.delete + "/" + item._id;
+    deleteApiCall(url, auth).then((json) => {
+      dispatch(fetchNoteList(json));
+    });
+    dispatch(addTrashNote(item));
+  };
+  const addNote = (note) => {
     let url = Server_url + API.notes.new_note;
     let body = {
-      note: {
-        title: "title",
-        note: "irdngdrg",
-        date: "i42/245/25",
-      },
+      note,
     };
     postApiCall(url, body, auth).then((json) => {
-      console.log(json, "rfe");
+      dispatch(fetchNoteList(json));
     });
-    console.log(state);
-  }, []);
+  };
+
+  const archiveNote = (item) => {
+    let url = Server_url + API.archive_notes.new_archive + "/" + item._id;
+    postApiCall(url, auth).then((json) => {
+      dispatch(fetchArchiveNoteList(item));
+    });
+  };
+
+  const editNote = (id) => {};
+
+  const [tags, setTags] = useState([
+    "All",
+    "Shopping",
+    "Work",
+    "Study",
+    "Other",
+  ]);
+  const [note, setNote] = useState({
+    _id: uuid(),
+    title: "",
+    content: "",
+    bgcolor: "white",
+    tag: "All",
+  });
 
   return (
     <>
-      <h1 className="heading self-center">Dashboard</h1>
-      <div className="flex-col  flex-wrap ">
-        <Searchbar
-          Onchange={(e) => {
-            console.log(e.target.value);
-          }}
-        />
-        <Card data={[]} />
+      <h1
+        className="heading self-center"
+        onClick={() => {
+          editNote();
+        }}
+      >
+        Dashboard
+      </h1>
+      <CreateNote {...{ addNote, setNote, note, tags }} />
+      <div className="flex-row  flex-wrap ">
+        {state.allNotes &&state.allNotes.map((item) => {
+          return (
+            <Card
+              data={item}
+              delete={() => {
+                deleteNote(item);
+              }}
+              edit={() => {
+                editNote();
+              }}
+              archive={() => {
+                archiveNote(item);
+              }}
+              buttons={true}
+            />
+          );
+        })}
       </div>
     </>
   );

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { API, Server_url } from "../adapters/apis";
 import "../commonstyles/Globalstyles.css";
 import "./style.css";
@@ -13,15 +14,29 @@ const Authentication = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
 
+  const navigate = useNavigate();
+  //once the login is done , do navigation
+  const location = useLocation();
+
   const login = () => {
     const url = Server_url + API.auth.login;
     const requestdata = { email: email, password: password };
     postAuthCall(url, requestdata)
       .then((res) => res.json())
       .then((response) => {
-        if (response.status === 200) {
+        if (response.encodedToken) {
           setAuth(response.encodedToken);
           localStorage.setItem("token", response.encodedToken);
+          if (location.state != null) {
+            navigate(location?.state?.from?.pathname, {
+              replace: true,
+            });
+          } else {
+            //If the login page was refreshed , i.e no initial location then move to home page
+            navigate("/dashboard", {
+              replace: true,
+            });
+          }
         }
       });
   };
@@ -34,13 +49,21 @@ const Authentication = () => {
       password: password,
     };
     postAuthCall(url, requestdata)
-      .then((res) => res.json())
-      .then((response) => {
-        console.log(response);
-        setFirstName("");
-        setLastName("");
-        setEmail("");
-        setPassword("");
+      .then((res) => res.json()).then((response) => {
+        if (response.encodedToken) {
+          setAuth(response.encodedToken);
+          localStorage.setItem("token", response.encodedToken);
+          if (location.state != null) {
+            navigate(location?.state?.from?.pathname, {
+              replace: true,
+            });
+          } else {
+            //If the login page was refreshed , i.e no initial location then move to home page
+            navigate("/dashboard", {
+              replace: true,
+            });
+          }
+        }
       });
   };
   // body contains {firstName, lastName, email, password}
@@ -103,16 +126,20 @@ const Authentication = () => {
         {signin ? (
           <p>
             Don't have an account !{" "}
-            <b onClick={() => setsignUp(false)} className="color-lightblue cursor-pointer">
-              {" "}
+            <b
+              onClick={() => setsignUp(false)}
+              className="color-lightblue cursor-pointer"
+            >
               Click here for SignUp{" "}
             </b>
           </p>
         ) : (
           <p>
             Already have an account !{" "}
-            <b onClick={() => setsignUp(true)} className="color-lightblue cursor-pointer">
-              {" "}
+            <b
+              onClick={() => setsignUp(true)}
+              className="color-lightblue cursor-pointer"
+            >
               Click here for SignIn{" "}
             </b>
           </p>
@@ -120,7 +147,7 @@ const Authentication = () => {
       </div>
       <div>
         <img
-        className="auth-img"
+          className="auth-img"
           src={
             !signin
               ? "https://res.cloudinary.com/dyflmd7n7/image/upload/v1650230831/notes/login_anmj5u.svg"

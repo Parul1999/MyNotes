@@ -40,6 +40,11 @@
     font-weight: bold;
     color: var(--lightgrey);
 }
+.tag{
+    font-size: .7rem;
+    margin-top: 1rem;
+    font-weight: bold;
+}
 
 .action-button {
     padding: 7px;

@@ -1,12 +1,12 @@
 .nav-item {
-  color: var(--white);
+  color: var(--primary);
   text-decoration: none;
   padding-top: 2.5rem;
   padding-right: 2rem;
 }
 
 .nav-item:hover {
-  color: var(--primary);
+  color: var(--lightgrey);
 }
 .nav-container{
     padding: 0 1rem;

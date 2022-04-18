@@ -1,14 +1,6 @@
 const FilterNotesList = (state, data) => {
     let tempData = [...data];
-    //filter on ratings
-    tempData = tempData.filter((item)=>item.date == state.date);
-    //filter on pricing
-    tempData = tempData.filter((item) => item.title == state.title);
-    //filter on category(men-women)
-    // tempData = state.category.length === 0
-    //             ? tempData
-    //             : tempData.filter((product) => state.category.includes(product.category));
-    
+    tempData = tempData.filter((item) => item.tag == state.tag);
     return tempData;
   };
 
