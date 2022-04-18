@@ -1,0 +1,21 @@
+.container-wrap{
+    padding: 6rem;
+    height: 100vh;
+}
+.dashboard-img{
+    width:100%;height: 50%;
+}
+.margin-top{
+margin-top: 1rem;
+}
+.text-container{
+    width: 50%;
+    padding-top: 2rem;
+}
+
+@media screen and (max-width: 500px) {
+    .text-container{
+        width: 100%;
+    }
+    
+}

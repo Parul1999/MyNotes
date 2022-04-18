@@ -1,0 +1,16 @@
+.nav-item {
+  color: var(--white);
+  text-decoration: none;
+  padding-top: 2.5rem;
+  padding-right: 2rem;
+}
+
+.nav-item:hover {
+  color: var(--primary);
+}
+.nav-container{
+    padding: 0 1rem;
+}
+.theme-svg{
+    width: 1.4rem;
+}

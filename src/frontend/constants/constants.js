@@ -1,0 +1,1 @@
+export const lightblue = '#2596be'

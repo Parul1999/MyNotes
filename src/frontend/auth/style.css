@@ -1,0 +1,29 @@
+.auth-container {
+    background-color: var(--white);
+    color: var(--black);
+    align-items: center;
+    padding: 1rem;
+}
+
+.auth-img {
+    height: 25rem;
+    width: 100%;
+}
+
+.auth-input {
+    border-radius: .2rem;
+    border-color: var(--lightgrey);
+    padding: 0.8rem 1.5rem;
+    border-width: 1px;
+    box-shadow: 3px 3px 5px var(--black);
+}
+
+.label {
+    margin-top: 1rem;
+    margin-bottom: .3rem;
+    font-size: 1rem;
+}
+
+.button-mr {
+    margin-top: 1rem;
+}
