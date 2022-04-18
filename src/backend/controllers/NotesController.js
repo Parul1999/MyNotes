@@ -69,6 +69,7 @@ export const createNoteHandler = function (schema, request) {
  * */
 
 export const deleteNoteHandler = function (schema, request) {
+  debugger
   const user = requiresAuth.call(this, request);
   try {
     if (!user) {

@@ -24,6 +24,20 @@ export const postApiCall = async (url, requestdata, token) => {
 
 }
 
+export const deleteApiCall = async (url, token) => {
+    const headers = { 'authorization': token }
+    
+    return (await fetch(url, { headers ,method:'DELETE'})
+        .then(response => response.json())
+        .then(json => {
+            return new Promise((resolve, reject) => {
+                return resolve(json)
+            })
+        }
+        ))
+
+}
+
 
 export const postAuthCall = async (url, requestdata) => {
     const headers = { 'Content-Type': 'application/x-www-form-urlencoded' }
