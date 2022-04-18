@@ -20,6 +20,10 @@ import uuid from "react-uuid";
 const Dashboard = () => {
   const { state, dispatch } = UsenoteList();
   const { auth } = useAuth();
+  const [listData, setListData] = useState([])
+useEffect(() => {
+  setListData(state.allNotes)
+}, [state])
 
   const deleteNote = (item) => {
     let url = Server_url + API.notes.delete + "/" + item._id;
@@ -70,11 +74,25 @@ const Dashboard = () => {
           editNote();
         }}
       >
-        Dashboard
+        Dashboard <span onClick={()=>{
+  
+        setListData(state.allNotes.sort((a, b) => {
+          let fa = a.title.toLowerCase(),
+              fb = b.title.toLowerCase();
+      
+          if (fa < fb) {
+              return -1;
+          }
+          if (fa > fb) {
+              return 1;
+          }
+          return 0;
+      }))
+        }}>Sort</span>
       </h1>
       <CreateNote {...{ addNote, setNote, note, tags }} />
       <div className="flex-row  flex-wrap ">
-        {state.allNotes &&state.allNotes.map((item) => {
+        {listData && listData.map((item) => {
           return (
             <Card
               data={item}
